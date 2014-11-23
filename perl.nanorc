@@ -9,13 +9,16 @@ OPERATOR: "[-+/*=<>?:!~%&,]"
 OPERATOR: "\.\.|\.\.\."
 OPERATOR: "\<(eq|ne|lt|gt|le|ge|cmp|x)\>"
 OPERATOR: "\<(and|or|xor|not)\>"
-SECTION:  "^[[:space:]]*package ([A-Za-z0-9_]|::)+;"
+
+SECTION:  "^[[:space:]]*package ([A-Za-z0-9_]|::)+[[:space:]]*;"
 SECTION:  "sub [A-Za-z_][A-Za-z0-9_]*"
+# labels
+SECTION:  "^[[:space:]]*[A-Za-z_][A-Za-z0-9_]*:[^:]" 
 
 # These are found in `perldoc -f "\-X"` 
 KEYWORD:  "-\<[rwxoRWXOezsfdlpSbctugkTBMAC]\>"
 
-TYPE:     "\<(my|our|local|use lib|use|sub|undef|state|no)\>"
+TYPE:     "\<(my|our|local|use lib|use|require|sub|undef|state|no)\>"
 
 # These keyword lists are taken from the nanosyntax project with some minor changes
 KEYWORD:  "\<(accept|alarm|atan2|bin(d|mode)|c(aller|h(dir|mod|op|own|root)|lose(dir)?|onnect|os|rypt)|d(bm(close|open)|efined|elete|ie|o|ump)|e(ach|of|val|x(ec|ists|it|p))|f(cntl|ileno|lock|ork))\>" 
@@ -29,6 +32,7 @@ JUMP:     "\<(given|when|default|continue|break|else|elsif|do|for|foreach|if|unl
 NUMBER:   "\<(([0-9]+|[0-9][0-9_]+[0-9])(\.([0-9]+|[0-9][0-9_]+[0-9])+)?([eE][0-9]+)?|0x[A-Fa-f0-9_]+|0b[0-1_]+)\>"
 NUMBER:   "v[0-9]+(.[0-9]+)*"
 
+COMMENT:  "(^|[^$])#.*$"
 
 # The following quotelike operators are documented in `perldoc -f s` and interpolate
 
@@ -58,17 +62,17 @@ STRING:   "`([^`]|\\`)*`"
 
 # Variables and functions will be interpolated into the strings above
 
-VARIABLE: "($#)?[$@%*]+[A-Za-z_]([A-Za-z0-9_]|::)*"
+VARIABLE: "(\$#)?[$@%*]+[A-Za-z_]([A-Za-z0-9_]|::)*"
 VARIABLE: "\$[0-9]"
 VARIABLE: "\$[@`'!$%&*~?|:;\\\/=]"
 VARIABLE: "\$^[A-Z]"
 VARIABLE: "[$@%][+\-]"
 
 # variable name and dereferencing
-VARIABLE: "($#)?[$@%*]+\{[^\}]+\}"
+VARIABLE: "(\$#)?[$@%*]+\{[^\}]+\}"
 
 # use the same formatting for postfix dereference
-VARIABLE: "([$@%]|$#)\*"
+VARIABLE: "([$@%]|\$#)\*"
 
 FUNCTION: "&[A-Za-z_]([A-Za-z0-9_]|::)*"
 
@@ -100,7 +104,6 @@ STRING:   "\<qw?\>\{([^\}]|\\.)*\}"
 
 STRING:   "'(\\.|[^'])*'"
 
-COMMENT:  "#.*$"
 
 COMMENT:  start="^=[A-Za-z]" end="^=cut"
 

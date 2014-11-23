@@ -21,12 +21,15 @@ print @$postfix;
 print $#{ $postfix };
 print $#$postfix;
 
-# var $names should not be 'highlighted' in @comments
+# var $names should not be 'highlighted' in @comments 
 
-die q#No $^W# unless $^W; 
+warn qq`but they are in $a qq string`
+  . "nor can #comments begin in strings";
+
+die q!No $^W! unless $^W;
 
 {
-	package Acme::Misc;
+	package Acme::Misc;#comments can appear after lines
 	use Data::Dumper 0.2;
 	print Dumper \%-;
 	1;
@@ -42,7 +45,7 @@ sub salami_slice ($) {
 
 my $bindir = FindBin::again();
 
-foreach my $item (qw{ $these %words @are not interpolated }) {
+ITEM: foreach my $item (qw{ $these %words @are not interpolated }) {
 	local $_ = "$item\n";
 	print qq(\s) for 1..10;
 	print qq(\s) x 10;
