@@ -1,6 +1,6 @@
 syntax "perl" "\.(pl|pm|t|PL)$"
 
-header "^#!.*/perl[-0-9._]*"
+header "^#!(.*/)?perl[-0-9._]*"
 
 # This variable type doesn't get interpolated
 VARIABLE: "__[A-Z]+__"
@@ -20,13 +20,17 @@ KEYWORD:  "-\<[rwxoRWXOezsfdlpSbctugkTBMAC]\>"
 
 TYPE:     "\<(my|our|local|use lib|use|require|sub|undef|state|no)\>"
 
-# These keyword lists are taken from the nanosyntax project with some minor changes
+# These keyword lists are taken from the nanosyntax project with some minor changes. There seem to be things missing, though.
 KEYWORD:  "\<(accept|alarm|atan2|bin(d|mode)|c(aller|h(dir|mod|op|own|root)|lose(dir)?|onnect|os|rypt)|d(bm(close|open)|efined|elete|ie|o|ump)|e(ach|of|val|x(ec|ists|it|p))|f(cntl|ileno|lock|ork))\>" 
 KEYWORD:  "\<(get(c|login|peername|pgrp|ppid|priority|pwnam|(host|net|proto|serv)byname|pwuid|grgid|(host|net)byaddr|protobynumber|servbyport)|([gs]et|end)(pw|gr|host|net|proto|serv)ent|getsock(name|opt)|gmtime|goto|grep|hex|index|int|ioctl|join)\>" 
 KEYWORD:  "\<(keys|kill|last|length|link|listen|localtime|log|lstat|m|mkdir|msg(ctl|get|snd|rcv)|next|oct|open(dir)?|ord|pack|pipe|pop|printf?|push|rand|re(ad(dir|link)?|cv|do|name|quire|set|turn|verse|winddir)|rindex|rmdir|scalar|seek(dir)?)\>" 
 KEYWORD:  "\<(se(lect|mctl|mget|mop|nd|tpgrp|tpriority|tsockopt)|shift|shm(ctl|get|read|write)|shutdown|sin|sleep|socket(pair)?|sort|spli(ce|t)|sprintf|sqrt|srand|stat|study|substr|symlink|sys(call|read|tem|write)|tell(dir)?|time|try|truncate|umask)\>" 
 KEYWORD:  "\<(un(def|link|pack|shift)|utime|values|vec|wait(pid)?|wantarray|warn|write)\>"
-KEYWORD:  "\<(fc)\>"
+
+# some items missing from the above list
+KEYWORD:  "\<(uc|lc|fc|ucfirst|lcfirst|pos|say|map|chomp)\>"
+
+# Flow control
 JUMP:     "\<(given|when|default|continue|break|else|elsif|do|for|foreach|if|unless|until|while|next|last|return|die|exit|redo|eval)\>"
 
 NUMBER:   "\<(([0-9]+|[0-9][0-9_]+[0-9])(\.([0-9]+|[0-9][0-9_]+[0-9])+)?([eE][0-9]+)?|0x[A-Fa-f0-9_]+|0b[0-1_]+)\>"
@@ -37,10 +41,10 @@ COMMENT:  "(^|[^$])#.*$"
 # The following quotelike operators are documented in `perldoc -f s` and interpolate
 
 STRING:   "\<s\>/([^/]|\\.)*/([^/]|\\.)*/[a-z]*"
-STRING:   "\<s\>~([^~]|\\.)*/([^~]|\\.)*~[a-z]*"
-STRING:   "\<s\>`([^`]|\\.)*/([^`]|\\.)*`[a-z]*"
-STRING:   "\<s\>!([^!]|\\.)*/([^!]|\\.)*![a-z]*"
-STRING:   "\<s\>#([^#]|\\.)*/([^#]|\\.)*#[a-z]*"
+STRING:   "\<s\>~([^~]|\\.)*~([^~]|\\.)*~[a-z]*"
+STRING:   "\<s\>`([^`]|\\.)*`([^`]|\\.)*`[a-z]*"
+STRING:   "\<s\>!([^!]|\\.)*!([^!]|\\.)*![a-z]*"
+STRING:   "\<s\>#([^#]|\\.)*#([^#]|\\.)*#[a-z]*"
 STRING:   "\<s\>\{([^}]|\\.)*\}[[:space:]]*\{([^}]|\\.)*\}[a-z]*"
 
 STRING:   "\<(m|q[rxq])\>/([^/]|\\.)*/"
@@ -78,11 +82,11 @@ FUNCTION: "&[A-Za-z_]([A-Za-z0-9_]|::)*"
 
 # Transliterations can have escapes but not interpolation
 
-STRING:   "\<(tr|y)\>/([^/]|\\.)*/([^/]\\\.)*/[a-z]*"
-STRING:   "\<(tr|y)\>~([^~]|\\.)*/([^~]\\\.)*~[a-z]*"
-STRING:   "\<(tr|y)\>`([^`]|\\.)*/([^`]\\\.)*`[a-z]*"
-STRING:   "\<(tr|y)\>!([^!]|\\.)*/([^!]\\\.)*![a-z]*"
-STRING:   "\<(tr|y)\>#([^#]|\\.)*/([^#]\\\.)*#[a-z]*"
+STRING:   "\<(tr|y)\>/([^/]|\\.)*/([^/]|\\.)*/[a-z]*"
+STRING:   "\<(tr|y)\>~([^~]|\\.)*~([^~]|\\.)*~[a-z]*"
+STRING:   "\<(tr|y)\>`([^`]|\\.)*`([^`]|\\.)*`[a-z]*"
+STRING:   "\<(tr|y)\>!([^!]|\\.)*!([^!]|\\.)*![a-z]*"
+STRING:   "\<(tr|y)\>#([^#]|\\.)*#([^#]|\\.)*#[a-z]*"
 STRING:   "\<(tr|y)\>\{([^}]|\\.)*\}[[:space:]]*\{([^}]|\\.)*\}[a-z]*"
 
 ESCAPE:   "\\([x][a-fA-F0-9]{2}|k<[^>]>|[xgpoPN]\{[^}]+\}|c.|p.\P.|[abetnrs]|[GAZzNvVhHRwWsSdDbBlLuU]|g[1-9][0-9]*|0[0-7]+|[1-9][0-9]*|[^A-Za-z0-9_])"
