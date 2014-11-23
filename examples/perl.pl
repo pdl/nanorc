@@ -22,6 +22,7 @@ print $#{ $postfix };
 print $#$postfix;
 
 # var $names should not be 'highlighted' in @comments 
+# but it's not crucial.
 
 warn qq`but they are in $a qq string`
   . "nor can #comments begin in strings";
@@ -47,6 +48,10 @@ my $bindir = FindBin::again();
 
 ITEM: foreach my $item (qw{ $these %words @are not interpolated }) {
 	local $_ = "$item\n";
+	s/[\$\%\@]//g; # these lines do
+	y{$%@}    {}d; # the same thing
+	tr{$%@}{   };  # this does not
+
 	print qq(\s) for 1..10;
 	print qq(\s) x 10;
 	print ${^MATCH} if /\x74/p;
