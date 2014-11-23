@@ -62,14 +62,14 @@ STRING:   "`([^`]|\\`)*`"
 
 # Variables and functions will be interpolated into the strings above
 
-VARIABLE: "(\$#)?[$@%*]+[A-Za-z_]([A-Za-z0-9_]|::)*"
+VARIABLE: "(\$#\$*|[$@%*]+)[A-Za-z_]([A-Za-z0-9_]|::)*"
 VARIABLE: "\$[0-9]"
 VARIABLE: "\$[@`'!$%&*~?|:;\\\/=]"
 VARIABLE: "\$^[A-Z]"
-VARIABLE: "[$@%][+\-]"
+VARIABLE: "(\$#|[$@%])[+\-]"
 
 # variable name and dereferencing
-VARIABLE: "(\$#)?[$@%*]+\{[^\}]+\}"
+VARIABLE: "(\$#\$*|[$@%*]+)\{[^\}]+\}"
 
 # use the same formatting for postfix dereference
 VARIABLE: "([$@%]|\$#)\*"
