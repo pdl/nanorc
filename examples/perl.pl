@@ -9,6 +9,12 @@ use lib "$FindBin::Bin/../lib";
 
 perl.pl - example of some perl for nanorc formatting
 
+=head1 SYNOPSIS
+
+	example code
+
+Explanation
+
 =cut
 
 use v5.20.0; # vstrings! also we can now use...
@@ -16,15 +22,17 @@ use v5.20.0; # vstrings! also we can now use...
 our $postfix = [q~deref~];
 print $postfix->$@;
 print $postfix->$#*;
-print @{ $postfix };
-print @$postfix;
-print $#{ $postfix };
-print $#$postfix;
+print @{ $circumfix };
+print @$prefix;
+print @$$$prefix;
+print $#{ $circumfix };
+print $#$prefix;
+print %{ $circumfix->{'nested'} };
 
 # var $names should not be 'highlighted' in @comments 
 # but it's not crucial.
 
-warn qq`but they are in $a qq string`
+warn qq`but they are in $a qq string &unless \$escaped`
   . "nor can #comments begin in strings";
 
 die q!No $^W! unless $^W;
@@ -75,3 +83,9 @@ say <<HEREDOC;
 it's a 
 HEREDOC
 
+0 and 'finally';
+
+__DATA__
+
+Anything after this is plain text!
+It can be read with <DATA>
