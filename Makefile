@@ -3,7 +3,7 @@ LANGS  = awk c cmake coffeescript colortest csharp css cython default dot \
          kickstart ledger lisp lua makefile man markdown mpdconf nanorc \
          nginx patch peg perl php pkgbuild pkg-config po privoxy properties \
          python rpmspec ruby sed shell sql systemd tex vala vi xml \
-         xresources yaml yum
+         xresources yaml yum diff
 
 MIXINS = $(wildcard mixins/*.nanorc)
 FILES  = $(addsuffix .nanorc, $(LANGS))
