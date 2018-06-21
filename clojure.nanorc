@@ -1,0 +1,32 @@
+syntax "clojure" "\.((clj[s|c]?)|edn)"
+
+# regular expressions from https://github.com/scopatz/nanorc/blob/master/clojure.nanorc
+
+TYPE: "defn? [0-9A-Z_]+"
+
+TYPE: "[#']"
+TYPE: "\<fn\>"
+KEYWORD: "\<(map|reduce|filter|println)\>"
+
+KEYWORD: "\<(if(-(let|not))?|condp?|when(-(let|not))?)\>"
+KEYWORD: "\<(do(all|run|seq|sync)?|recur|loop)\>"
+KEYWORD: "\<(try|catch|finally|throw)\>"
+KEYWORD: "(\:else) "
+
+JUMP: "\<(require|use|import|ns)\>"
+TYPE: "(\:(require|use|import)) "
+TYPE: "\<(let(fn)?|defn?)\>"
+
+OPERATOR: "\((\/|((not|[<>\=])?\=?))"
+OPERATOR: "\((\+|-|\*)'?"
+OPERATOR: "\<(and|or|not|mod|quot|rem|inc|dec)\>"
+
+FUNCTION: "[\(\)]"
+TYPE: "(\[|\])"
+
+BOOLEAN: "\<(true|false|nil)\>"
+STRING: "(["][^"]*[^\\]["])|("")"
+
+COMMENT: ";.*$"
+
++LINT
